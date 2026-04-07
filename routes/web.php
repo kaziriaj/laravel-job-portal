@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\EmployeeProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -24,5 +25,9 @@ Route::middleware('guest')->group(function(){
 Route::middleware('auth')->group(function(){
     Route::post('/logout',[LoginController::class,'logout']);
     Route::get('/dashboard',[DashboardController::class,'index']);
+});
 
+Route::prefix('employee')->middleware(['auth', 'role:employee'])->group(function(){
+    Route::get('/profile', [EmployeeProfileController::class, 'index']);
+    Route::get('/dashboard',[DashboardController::class,'index']);
 });

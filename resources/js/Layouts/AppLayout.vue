@@ -19,9 +19,12 @@
                         >
                     </li>
                     <li class="nav-item mb-2">
-                        <a href="#" class="nav-link text-white"
-                            ><i class="bi bi-calendar-event"></i> Events</a
+                        <Link
+                            v-if="$page.props.auth.user.role === 'employee'"
+                            href="/profile"
                         >
+                            Profile
+                        </Link>
                     </li>
                     <li class="nav-item mb-2">
                         <a href="#" class="nav-link text-white"
@@ -33,38 +36,22 @@
                             ><i class="bi bi-gear"></i> Settings</a
                         >
                     </li>
+                    <li class="nav-item mb-2">
+                        <form action="">
+                            <button
+                                @click.prevent="logout"
+                                class="dropdown-item"
+                            >
+                                Logout
+                            </button>
+                        </form>
+                    </li>
                 </ul>
             </aside>
 
             <!-- Main Content -->
             <main class="flex-grow-1 p-4 bg-light">
-                <h2>Dashboard Overview</h2>
-                <div class="row mt-4">
-                    <div class="col-md-4">
-                        <div class="card shadow-sm">
-                            <div class="card-body">
-                                <h5 class="card-title">Total Events</h5>
-                                <p class="card-text display-6">12</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card shadow-sm">
-                            <div class="card-body">
-                                <h5 class="card-title">Active Users</h5>
-                                <p class="card-text display-6">58</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card shadow-sm">
-                            <div class="card-body">
-                                <h5 class="card-title">Pending Tasks</h5>
-                                <p class="card-text display-6">7</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <slot />
             </main>
         </div>
 
@@ -75,7 +62,13 @@
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { router } from "@inertiajs/vue3";
+
+const logout = () => {
+    router.post("/logout");
+};
+</script>
 
 <style scoped>
 aside {

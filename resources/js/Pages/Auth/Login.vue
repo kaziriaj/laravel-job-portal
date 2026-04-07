@@ -3,7 +3,7 @@
         <div class="card shadow-lg" style="width: 360px">
             <div class="card-body">
                 <h3 class="text-center mb-4">Sign In</h3>
-                <form>
+                <form @submit.prevent="loginProcess">
                     <!-- Email -->
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
@@ -17,6 +17,7 @@
                                 class="form-control"
                                 placeholder="Enter email"
                                 required
+                                v-model="form.email"
                             />
                         </div>
                     </div>
@@ -36,6 +37,7 @@
                                 class="form-control"
                                 placeholder="Enter password"
                                 required
+                                v-model="form.password"
                             />
                         </div>
                     </div>
@@ -70,5 +72,14 @@
     </div>
 </template>
 <script setup>
-import { Link } from "@inertiajs/vue3";
+import { useForm, Link } from "@inertiajs/vue3";
+
+const form = useForm({
+    email: "",
+    password: "",
+});
+
+const loginProcess = () => {
+    form.post("/login");
+};
 </script>
