@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\EmployeeProfileController;
+use App\Http\Controllers\SkillContoller;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -29,5 +30,7 @@ Route::middleware('auth')->group(function(){
 
 Route::prefix('employee')->middleware(['auth', 'role:employee'])->group(function(){
     Route::get('/profile', [EmployeeProfileController::class, 'index']);
+    Route::get('/skill/create', [SkillContoller::class,'create']);
+    Route::post('/skill/create', [SkillContoller::class,'store']);
     Route::get('/dashboard',[DashboardController::class,'index']);
 });

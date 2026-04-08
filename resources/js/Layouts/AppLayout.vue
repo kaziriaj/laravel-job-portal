@@ -20,8 +20,9 @@
                     </li>
                     <li class="nav-item mb-2">
                         <Link
-                            v-if="$page.props.auth.user.role === 'employee'"
-                            href="/profile"
+                            class="nav-link text-white"
+                            v-if="user && user.role === 'employee'"
+                            href="/employee/profile"
                         >
                             Profile
                         </Link>
@@ -63,8 +64,11 @@
 </template>
 
 <script setup>
-import { router } from "@inertiajs/vue3";
+import { computed } from "vue";
+import { usePage, Link, router } from "@inertiajs/vue3";
 
+const page = usePage();
+const user = computed(() => page.props.auth.user);
 const logout = () => {
     router.post("/logout");
 };
